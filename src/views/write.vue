@@ -92,7 +92,7 @@
           .then(_ => {
             let article = {title : this.input, introduction :
               this.textarea, content : this.content, catalogName : this.value,
-              personal : this.radio, count : 1,userName : JSON.parse(localStorage.getItem('userdata')).name
+              personal : this.radio, count : 0,userName : JSON.parse(localStorage.getItem('userdata')).name
             }
             this.$axios.post('http://localhost:8888/article/publishArticle', article)
               .then(response => {
