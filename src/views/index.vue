@@ -6,20 +6,15 @@
         <el-menu-item index="1"><a href="">首页</a></el-menu-item>
         <el-submenu index="2">
           <template slot="title">我的工作台</template>
-          <el-menu-item index="2-2">我的收藏</el-menu-item>
+          <el-menu-item index="2-2" @click="showMyFollowArticles">我的收藏</el-menu-item>
           <el-menu-item index="2-5" @click="showMyArticles()">我的博客</el-menu-item>
           <el-menu-item index="2-6" @click="exit()">{{land}}</el-menu-item>
         </el-submenu>
-        <el-menu-item index="3">消息中心</el-menu-item>
+        <el-menu-item @click="goView2" style="color:red;" index="3" v-if="msgCount > 0">消息中心({{msgCount}})</el-menu-item>
+        <el-menu-item index="3" @click="goView2" v-else>消息中心</el-menu-item>
         <el-menu-item index="4"><a href="/write" >写博客</a></el-menu-item>
         <el-menu-item index="5">关于</el-menu-item>
-        <el-menu-item index="6">文档</el-menu-item>
-        <el-menu-item index="7">客服</el-menu-item>
-        <el-menu-item index="8">福利</el-menu-item>
-        <el-menu-item index="9">空间</el-menu-item>
-        <el-menu-item index="10">今日要闻</el-menu-item>
-        <el-menu-item index="11">历史纪录</el-menu-item>
-        <el-menu-item index="12" v-if="land == '退出'">欢迎您：{{user}}</el-menu-item>
+        <el-menu-item index="6" v-if="land == '退出'">欢迎您：{{user}}</el-menu-item>
       </el-menu>
       </div>
     </div>
@@ -79,13 +74,67 @@
         //当前的文章是否是关注人的
         pageIsFollow: false,
         //当前显示的文章是否是自己的
-        pageIsIsMine: false
+        pageIsIsMine: false,
+        msgCount: 0,
+        pageIsFollowArticles: false
       };
     },
     methods: {
+      //展示我收藏的文章
+      showMyFollowArticles(){
+        if (this.user == ''){
+          this.$message.error("您还未登陆，请先登录")
+          window.location.href = '/';
+        }
+        this.pageIsFollow = false
+        this.pageIsIsMine = false
+        if (this.pageIsFollowArticles === false){
+          this.count = 0
+        }
+        this.$axios.get("http://localhost:8888/article/showMyFollowArticles", {
+          params: {
+            userName : this.user,
+          }
+        }).then(response =>{
+          if (response.data.success){
+            if (this.pageIsFollowArticles === false){
+              this.pageIsFollowArticles = true
+              this.articles = response.data.data
+            } else {
+              this.articles = this.articles.concat(response.data.data)
+            }
+          } else {
+            alert(response.data.name)
+          }
+        }).catch(function (error) {
+          console.log(error)
+        })
+      },
+      //获取未读消息的数目
+      getUnReadMsgCount(){
+        if (this.user != ''){
+          this.$axios.get("http://localhost:8888/event/getUnReadCount", {
+            params:{
+              userName : this.user
+            }})
+            .then(response => {
+              console.log(response)
+              if (response.data.success){
+                this.msgCount = response.data.data
+              }
+            }).catch(function (error) {
+            console.log(error)
+          })
+        }
+      },
       showMyArticles(){
+        if (this.user == ''){
+          this.$message.error("您还未登陆，请先登录")
+          window.location.href = '/';
+        }
         this.articles = null
         this.pageIsFollow = false
+        this.pageIsFollowArticles = false
         this.showMyArticlesMid();
       },
       showMyArticlesMid(){
@@ -118,8 +167,10 @@
         this.is_red_color  = '关注'
         this.articles = null
         this.pageIsIsMine = false
+        this.pageIsFollowArticles = false
         this.getMyFollowArticles()
       },
+      //获取我关注的人的文章
       getMyFollowArticles(){
         this.$axios.get("http://localhost:8888/article/getArticlesOfFollowers", {
           params: {
@@ -193,6 +244,13 @@
       goView1(userName){
         window.location.href = '/userIndex?userName=' + userName
       },
+      //跳转到信息中心
+      goView2(userName){
+        if (this.user == ''){
+          this.$message.error("您还未登陆，请先登录")
+          window.location.href = '/';
+        }
+      },
       changeContent(name){
         this.is_red_color = name
         this.count = 0
@@ -246,6 +304,8 @@
       }
       this.user = localStorage.getItem('userdata')
       this.user = JSON.parse(this.user).name
+      //加载未读消息数目
+      this.getUnReadMsgCount()
     }
   }
 </script>

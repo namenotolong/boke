@@ -1,28 +1,5 @@
 <template>
     <div>
-      <div class="nav-header">
-        <div class="nav">
-          <el-menu :default-active="activeIndex2" mode="horizontal" @select="handleSelect" background-color="" text-color="black" active-text-color="red">
-            <el-menu-item index="1"><a href="/index">首页</a></el-menu-item>
-            <el-submenu index="2">
-              <template slot="title">我的工作台</template>
-              <el-menu-item index="2-2">我的收藏</el-menu-item>
-              <el-menu-item index="2-4" v-if="land == '退出'">我的博客</el-menu-item>
-              <el-menu-item index="2-5" @click="exit()">{{land}}</el-menu-item>
-            </el-submenu>
-            <el-menu-item index="3">消息中心</el-menu-item>
-            <el-menu-item index="4"><a href="/write" >写博客</a></el-menu-item>
-            <el-menu-item index="5">关于</el-menu-item>
-            <el-menu-item index="6">文档</el-menu-item>
-            <el-menu-item index="7">客服</el-menu-item>
-            <el-menu-item index="8">福利</el-menu-item>
-            <el-menu-item index="9">空间</el-menu-item>
-            <el-menu-item index="10">今日要闻</el-menu-item>
-            <el-menu-item index="11">历史纪录</el-menu-item>
-            <el-menu-item index="12" v-if="land == '退出'">欢迎您：{{user}}</el-menu-item>
-          </el-menu>
-        </div>
-      </div>
       <div class="content">
         <div :class="{user_content : true, is_top : top_temp}">
           <div class="user-info user-data-base">
@@ -46,6 +23,7 @@
         </div>
         <div class="article-content">
             <div>
+              <el-button onclick="javascipt:window.location.href = '/index'">返回首页</el-button>
               <h1>{{article.title}}</h1>
             </div>
           <div style="color: #858585;font-size: 14px;">
@@ -303,7 +281,7 @@
         this.$axios.get("http://localhost:8888/article/checkStored", {
           params : {
             _id : this.id,
-            username : this.user
+            userName : this.user
           }
         }).then(response => {
           if (response.data.success){
@@ -319,7 +297,7 @@
         this.$axios.get("http://localhost:8888/article/store", {
           params : {
             _id : this.id,
-            username : this.user
+            userName : this.user
           }
         }).then(response => {
           if (response.data.success){
@@ -335,7 +313,7 @@
         this.$axios.get("http://localhost:8888/article/unStore", {
           params : {
             _id : this.id,
-            username : this.user
+            userName : this.user
           }
         }).then(response => {
           if (response.data.success){
@@ -444,15 +422,6 @@
         } else {
           window.location.href = '/'
         }
-      },
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
       },
       getArticle(){
         this.$axios.get("http://localhost:8888/article/getArticleById", {

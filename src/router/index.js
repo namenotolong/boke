@@ -3,9 +3,9 @@ import Router from 'vue-router'
 import login from '@/views/login'
 import index from '@/views/index'
 import write from '@/views/write'
-import test from '@/views/test'
 import articleComponent from '@/views/articleComponent'
 import userIndex from '@/views/userIndex'
+import message from '@/views/message'
 
 Vue.use(Router)
 
@@ -37,14 +37,6 @@ export default new Router({
       }
     },
     {
-      path: '/test',
-      name: 'test',
-      component: test,
-      meta: {
-        requiredAuth: false
-      }
-    },
-    {
       path: '/articleComponent',
       name: 'articleComponent',
       component: articleComponent,
@@ -58,6 +50,14 @@ export default new Router({
       component: userIndex,
       meta: {
         requiredAuth: false
+      }
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: message,
+      meta: {
+        requiredAuth: true
       }
     },
   ]
