@@ -24,7 +24,7 @@ public class RabbiMQReceiver {
         event.setContent(common.getContent());
         event.setFromUserName(common.getUserName());
         event.setToUserName(common.getReplyUser());
-        event.setCommonId(common.getCommonId());
+        event.setCommonId(common.get_id());
         event.setStatus(1);
         dao.insert(event);
     }

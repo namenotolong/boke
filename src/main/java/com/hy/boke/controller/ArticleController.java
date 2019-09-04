@@ -54,4 +54,25 @@ public class ArticleController {
     public Msg<List<Article>> getOwnArticles(@ApiParam("人名")String name,@ApiParam("第几页") int count){
         return articleService.getOwnArticles(name, count);
     }
+    @ApiOperation("判断自己是否收藏文章")
+    @GetMapping("/checkStored")
+    public Msg<Boolean> checkStored(@ApiParam("文章id")String _id,@ApiParam("人名") String userName){
+        return articleService.checkStored(_id, userName);
+    }
+    @ApiOperation("收藏文章")
+    @GetMapping("/store")
+    public Msg<Boolean> store(@ApiParam("文章id")String _id,@ApiParam("人名") String userName){
+        return articleService.store(_id, userName);
+    }
+    @ApiOperation("取消收藏文章")
+    @GetMapping("/unStore")
+    public Msg<Boolean> unStore(@ApiParam("文章id")String _id,@ApiParam("人名") String userName){
+        return articleService.unStore(_id, userName);
+    }
+
+    @ApiOperation("获取收藏文章")
+    @GetMapping("/showMyFollowArticles")
+    public Msg<List<Article>> showMyFollowArticles(@ApiParam("用户名") String userName){
+        return articleService.showMyFollowArticles(userName);
+    }
 }

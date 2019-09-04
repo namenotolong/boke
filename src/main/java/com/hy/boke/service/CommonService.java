@@ -108,11 +108,11 @@ public class CommonService extends BaseService{
         Msg<Common> msg = new Msg<>();
         if (null != common){
             Common common1 = initPublishCommon(common);
-            commonRepository.save(common1);
+            Common save = commonRepository.save(common1);
             msg.setSuccess(true);
-            msg.setData(common1);
+            msg.setData(save);
             //使用rabbitMQ发送消息
-            sender.send(common1);
+            sender.send(save);
             return msg;
         }
         msg.setSuccess(false);
@@ -153,13 +153,12 @@ public class CommonService extends BaseService{
         if (null != common){
             Common common1 = initPublishCommonReplied(common);
             if (null != common){
-                commonRepository.save(common1);
+                Common save = commonRepository.save(common1);
+                sender.send(save);
+                msg.setSuccess(true);
+                msg.setData(common1);
+                return msg;
             }
-            msg.setSuccess(true);
-            msg.setData(common1);
-            //使用rabbitMQ发送消息
-            sender.send(common1);
-            return msg;
         }
         msg.setSuccess(false);
         return msg;

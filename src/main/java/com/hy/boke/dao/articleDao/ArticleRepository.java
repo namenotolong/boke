@@ -15,4 +15,5 @@ public interface ArticleRepository extends MongoRepository<Article, Long> {
     List<Article> findAllArticlesByUserName(String name);
     List<Article> findAllArticlesByUserName(String name, Pageable pageable);
     List<Article> findArticlesByUserNameIn(Set<Object> name, Pageable pageable);
+    Article findBy_id(String _id);
 }

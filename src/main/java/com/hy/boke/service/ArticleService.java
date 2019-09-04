@@ -1,5 +1,6 @@
 package com.hy.boke.service;
 
+import com.hy.boke.dao.CommonRepository;
 import com.hy.boke.dao.articleDao.ArticleRepository;
 import com.hy.boke.po.Article;
 import com.hy.boke.po.Msg;
@@ -13,16 +14,21 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
+//文章关注redis  hash表  表名：文章名   k：用户名   v：time
+//用户关注redis  hash表   表名：人名    k：文章_id  v:time
 @Service
-public class ArticleService {
+public class ArticleService extends BaseService {
     @Autowired
     private ArticleRepository articleRepository = null;
 
     @Autowired
     private MongoTemplate mongoTemplate = null;
+
+    @Autowired
+    private CommonRepository commonRepository;
 
     @Autowired
     private StringRedisTemplate redisTemplate = null;
@@ -63,6 +69,7 @@ public class ArticleService {
         } else {
             content = articleRepository.findArticlesByCatalogName(name, PageRequest.of(count, 6)).getContent();
         }
+        content.forEach(x -> x.setCount(commonRepository.countAllByArticleId(x.get_id())));
         Msg<List<Article>> msg = new Msg<>();
         if (content.size() == 0){
             msg.setSuccess(false);
@@ -153,6 +160,75 @@ public class ArticleService {
         List<Article> articlesByUserNameExists = articleRepository.findArticlesByUserNameIn(keys, PageRequest.of(count, 6));
         msg.setSuccess(true);
         msg.setData(articlesByUserNameExists);
+        return msg;
+    }
+    /**
+     * 判断该文章自己是否关注
+     */
+    public Msg<Boolean> checkStored(String _id, String userName){
+        Msg<Boolean> msg = new Msg<>();
+        if (checkNotNull(_id, userName)){
+            Boolean aBoolean = redisTemplate.opsForHash().hasKey(_id, userName);
+            msg.setSuccess(aBoolean);
+            msg.setName("不存在");
+            return msg;
+        }
+        msg.setSuccess(false);
+        msg.setName("参数不完整");
+        return msg;
+    }
+    /**
+     * 收藏文章
+     */
+    public Msg<Boolean> store(String _id, String userName){
+        Msg<Boolean> msg = new Msg<>();
+        if (checkNotNull(_id, userName)){
+            Boolean aBoolean = redisTemplate.opsForHash().putIfAbsent(_id, userName, getFormatterTimeFromLong(System.currentTimeMillis()));
+            Boolean bBoolean = redisTemplate.opsForHash().putIfAbsent(userName, _id, getFormatterTimeFromLong(System.currentTimeMillis()));
+            msg.setSuccess(aBoolean && bBoolean);
+            msg.setName("关注失败");
+            return msg;
+        }
+        msg.setSuccess(false);
+        msg.setName("参数不完整");
+        return msg;
+    }
+    /**
+     * 取消关注文章
+     */
+    public Msg<Boolean> unStore(String _id, String userName){
+        Msg<Boolean> msg = new Msg<>();
+        if (checkNotNull(_id, userName)){
+            Long delete1 = redisTemplate.opsForHash().delete(_id, userName);
+            Long delete2 = redisTemplate.opsForHash().delete(userName, _id);
+            msg.setSuccess(delete1 > 0 && delete2 > 0);
+            msg.setName("取消关注失败");
+            return msg;
+        }
+        msg.setSuccess(false);
+        msg.setName("参数不完整");
+        return msg;
+    }
+    /**
+     * 获取关注的文章
+     */
+    public Msg<List<Article>> showMyFollowArticles(String userName){
+        Msg<List<Article>> msg = new Msg<>();
+        if (null != userName){
+            Set<Object> keys = redisTemplate.opsForHash().keys(userName);
+            List<Article> list = new ArrayList<>();
+            for (Object temp: keys) {
+                Article by_id = articleRepository.findBy_id(String.valueOf(temp));
+                if (null != by_id){
+                    list.add(by_id);
+                }
+            }
+            msg.setSuccess(true);
+            msg.setData(list);
+            return msg;
+        }
+        msg.setSuccess(false);
+        msg.setName("参数空");
         return msg;
     }
 }
