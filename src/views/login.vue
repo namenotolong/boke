@@ -10,6 +10,7 @@
           <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="密码" ></el-input>
         </el-form-item>
         <el-checkbox class="remember" v-model="rememberpwd">记住密码</el-checkbox>
+        <span  @click="toRegister"><el-link href="#" class="register">我要注册</el-link></span>
         <div class="drag" ref="dragDiv">
           <div class="drag_bg"></div>
           <div class="drag_text" >{{confirmWords}}</div>
@@ -75,6 +76,9 @@
       this.getuserpwd()
     },
     methods: {
+      toRegister(){
+        this.$router.push({path : '/register'})
+      },
       init (info) {
         this.confirmWords = '拖动滑块验证';
         this.$message.error(info)
@@ -190,6 +194,10 @@
 </script>
 
 <style scoped>
+  .register{
+    margin-left: 50%;
+    color: dodgerblue;
+  }
   .form-container{
     margin-top: 5%;
   }

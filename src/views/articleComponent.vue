@@ -145,6 +145,7 @@
         this.getArticlesByName();
         this.followed();
       }
+      //
       this.getFansNums();
       this.getFollowsNums();
       this.getIsStored();
@@ -220,7 +221,7 @@
           this.$message.error('请输入具体内容')
           return
         }
-        let common = {articleId: this.id, userName: 1, content: this.input,replyUser: this.replyUser, commonId: this.replyCommonId}
+        let common = {articleId: this.id, userName: this.user, content: this.input,replyUser: this.replyUser, commonId: this.replyCommonId}
         this.$axios.post("http://localhost:8888/common/doCommonOfCommon", common)
           .then(response => {
             if (response.data.success){

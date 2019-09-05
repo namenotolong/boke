@@ -11,9 +11,9 @@ export default new Vuex.Store({
     mutations: {
         // 登录
         login(state, token) {
-            state.token = token;
-            state.login = true
-            localStorage.setItem("token", token);
+          state.token = token;
+          state.login = true
+          localStorage.setItem("token", token);
         },
         // 退出
         logout(state, token) {

@@ -6,6 +6,7 @@ import write from '@/views/write'
 import articleComponent from '@/views/articleComponent'
 import userIndex from '@/views/userIndex'
 import message from '@/views/message'
+import register from '@/views/register'
 
 Vue.use(Router)
 
@@ -58,6 +59,14 @@ export default new Router({
       component: message,
       meta: {
         requiredAuth: true
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: register,
+      meta: {
+        requiredAuth: false
       }
     },
   ]

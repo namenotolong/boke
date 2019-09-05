@@ -249,6 +249,8 @@
         if (this.user == ''){
           this.$message.error("您还未登陆，请先登录")
           window.location.href = '/';
+        } else {
+          window.location.href = '/message';
         }
       },
       changeContent(name){
