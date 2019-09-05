@@ -1,6 +1,8 @@
 package com.hy.boke.service;
 
 
+import com.hy.boke.po.Msg;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -18,5 +20,11 @@ public class BaseService {
     public String getFormatterTimeFromLong(Long time){
         DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return ftf.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault()));
+    }
+    public Msg<Object> returnError(){
+        Msg<Object> msg = new Msg<>();
+        msg.setSuccess(false);
+        msg.setName("参数错误");
+        return msg;
     }
 }

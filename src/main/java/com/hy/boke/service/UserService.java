@@ -122,7 +122,7 @@ public class UserService {
         return redisTemplate.opsForHash().keys(name + "2");
     }
     /**
-     * 用户注册
+     * 用户注册,前端加密
      */
     public Msg<User> register(User user){
         Msg<User> msg = new Msg<>();

@@ -46,4 +46,5 @@ public class Common implements Serializable {
     private String rootId;
     @Field("count")
     private Long count;
+    private String articleUserName;
 }
