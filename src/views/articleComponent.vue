@@ -159,7 +159,7 @@
       //展示某一评论的所有回复
       showAllReply(index){
         this.showCount = index
-        this.$axios.get("http://localhost:8888/common/getCommonsOfCommon", {
+        this.$axios.get("http://zhsdsb.top:8888/common/getCommonsOfCommon", {
           params: {
             commonId : index
           }
@@ -176,7 +176,7 @@
       //显示所有评论
       showAllCommons(){
         $("#showALl").css('display', 'none')
-        this.$axios.get("http://localhost:8888/common/getCommonsOfArticle",{
+        this.$axios.get("http://zhsdsb.top:8888/common/getCommonsOfArticle",{
           params : {
             _id : this.id,
           }
@@ -222,7 +222,7 @@
           return
         }
         let common = {articleId: this.id, userName: this.user, content: this.input,replyUser: this.replyUser, commonId: this.replyCommonId}
-        this.$axios.post("http://localhost:8888/common/doCommonOfCommon", common)
+        this.$axios.post("http://zhsdsb.top:8888/common/doCommonOfCommon", common)
           .then(response => {
             if (response.data.success){
               this.$message.success("回复成功")
@@ -247,7 +247,7 @@
           return
         }
         let common = {articleId: this.id, userName: 1, content: this.input,replyUser: this.articleUserName}
-        this.$axios.post("http://localhost:8888/common/doCommonOfArticle", common)
+        this.$axios.post("http://zhsdsb.top:8888/common/doCommonOfArticle", common)
           .then(response => {
             if (response.data.success){
               this.$message.success("评论成功")
@@ -262,7 +262,7 @@
       },
       //获取文章的评论
       getCommonsOfArticle(){
-        this.$axios.get("http://localhost:8888/common/getCommonsOfArticle",{
+        this.$axios.get("http://zhsdsb.top:8888/common/getCommonsOfArticle",{
           params : {
             _id : this.id,
             count : this.commonsCount
@@ -279,7 +279,7 @@
       },
       //判断是否收藏
       getIsStored(){
-        this.$axios.get("http://localhost:8888/article/checkStored", {
+        this.$axios.get("http://zhsdsb.top:8888/article/checkStored", {
           params : {
             _id : this.id,
             userName : this.user
@@ -295,7 +295,7 @@
         })
       },
       storeThis(){
-        this.$axios.get("http://localhost:8888/article/store", {
+        this.$axios.get("http://zhsdsb.top:8888/article/store", {
           params : {
             _id : this.id,
             userName : this.user
@@ -311,7 +311,7 @@
         })
       },
       cancelStore(){
-        this.$axios.get("http://localhost:8888/article/unStore", {
+        this.$axios.get("http://zhsdsb.top:8888/article/unStore", {
           params : {
             _id : this.id,
             userName : this.user
@@ -328,7 +328,7 @@
       },
       //获取粉丝数目
       getFansNums(){
-        this.$axios.get("http://localhost:8888/users/getFansNums", {
+        this.$axios.get("http://zhsdsb.top:8888/users/getFansNums", {
           params : {
             name : this.articleUserName,
           }
@@ -340,7 +340,7 @@
         })
       },
       getFollowsNums(){
-        this.$axios.get("http://localhost:8888/users/getFollowsNums", {
+        this.$axios.get("http://zhsdsb.top:8888/users/getFollowsNums", {
           params : {
             name : this.articleUserName,
           }
@@ -352,7 +352,7 @@
         })
       },
       follow(){
-        this.$axios.get("http://localhost:8888/users/follow", {
+        this.$axios.get("http://zhsdsb.top:8888/users/follow", {
           params : {
             name : this.user,
             byFollowedName: this.articleUserName
@@ -368,7 +368,7 @@
         })
       },
       cancelFollow(){
-        this.$axios.get("http://localhost:8888/users/cancelFollow", {
+        this.$axios.get("http://zhsdsb.top:8888/users/cancelFollow", {
           params : {
             name : this.user,
             byFollowedName: this.articleUserName
@@ -384,7 +384,7 @@
         })
       },
       followed(){
-        this.$axios.get("http://localhost:8888/users/getIsFollowed", {
+        this.$axios.get("http://zhsdsb.top:8888/users/getIsFollowed", {
           params : {
             name : this.user,
             byFollowedName: this.articleUserName
@@ -425,7 +425,7 @@
         }
       },
       getArticle(){
-        this.$axios.get("http://localhost:8888/article/getArticleById", {
+        this.$axios.get("http://zhsdsb.top:8888/article/getArticleById", {
           params : {
             id : this.id,
           }
@@ -442,7 +442,7 @@
         })
       },
       getArticlesByName(){
-        this.$axios.get("http://localhost:8888/article/getArticlesByName", {
+        this.$axios.get("http://zhsdsb.top:8888/article/getArticlesByName", {
           params : {
             userName : this.articleUserName
           }

@@ -55,7 +55,7 @@
     created () {
       let user = localStorage.getItem('token')
       if (null != user) {
-        this.$axios.get('http://localhost:8888/users/validate').then(response => {
+        this.$axios.get('http://zhsdsb.top:8888/users/validate').then(response => {
           if (response.data) {
             this.$message.success("自动登陆成功")
             setTimeout(() => {
@@ -118,7 +118,7 @@
               this.logining = false
               let user = {name : this.ruleForm.username, password : Encrypt(this.ruleForm.password)}
               console.log(user)
-              this.$axios.post("http://localhost:8888/users/login", user).then(response => {
+              this.$axios.post("http://zhsdsb.top:8888/users/login", user).then(response => {
                 if (response.data.success) {
                   setTimeout(() => {
                     this.confirmWords = response.data.name

@@ -94,7 +94,7 @@
               this.textarea, content : this.content, catalogName : this.value,
               personal : this.radio, count : 0,userName : JSON.parse(localStorage.getItem('userdata')).name
             }
-            this.$axios.post('http://localhost:8888/article/publishArticle', article)
+            this.$axios.post('http://zhsdsb.top:8888/article/publishArticle', article)
               .then(response => {
                 if(response.data.success){
                   this.$message.success(response.data.name)
@@ -117,7 +117,7 @@
       },
     },
     mounted () {
-      this.$axios.get('http://localhost:8888/getCatalogs')
+      this.$axios.get('http://zhsdsb.top:8888/getCatalogs')
         .then(response => {
           this.options = response.data
         })

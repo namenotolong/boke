@@ -103,7 +103,7 @@
             console.log(this.ruleForm.phone)
             let pwd = Encrypt(this.ruleForm.pass)
             let user = {name: this.ruleForm.phone, password: pwd}
-            this.$axios.post("http://localhost:8888/users/signup", user).then(response => {
+            this.$axios.post("http://zhsdsb.top:8888/users/signup", user).then(response => {
               if (response.data.success){
                 this.$message.success("注册成功")
                 setTimeout(() => {

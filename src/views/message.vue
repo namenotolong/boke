@@ -109,7 +109,7 @@
           return
         }
         let common = {articleId: articleId, userName: this.user, content: this.input,replyUser: fromUserName, commonId: commonId}
-        this.$axios.post("http://localhost:8888/common/doCommonOfCommon", common)
+        this.$axios.post("http://zhsdsb.top:8888/common/doCommonOfCommon", common)
           .then(response => {
             if (response.data.success){
               this.$message.success("回复成功")
@@ -139,7 +139,7 @@
       //拉取事件消息,1代表自己收到的  0代表发出的
       getEvents(){
         if (this.user != ''){
-          this.$axios.get("http://localhost:8888/event/getEvents",{
+          this.$axios.get("http://zhsdsb.top:8888/event/getEvents",{
             params : {
               userName: this.user,
               type: this.type,

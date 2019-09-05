@@ -91,7 +91,7 @@
         if (this.pageIsFollowArticles === false){
           this.count = 0
         }
-        this.$axios.get("http://localhost:8888/article/showMyFollowArticles", {
+        this.$axios.get("http://zhsdsb.top:8888/article/showMyFollowArticles", {
           params: {
             userName : this.user,
           }
@@ -113,7 +113,7 @@
       //获取未读消息的数目
       getUnReadMsgCount(){
         if (this.user != ''){
-          this.$axios.get("http://localhost:8888/event/getUnReadCount", {
+          this.$axios.get("http://zhsdsb.top:8888/event/getUnReadCount", {
             params:{
               userName : this.user
             }})
@@ -141,7 +141,7 @@
         if (this.pageIsIsMine === false){
           this.count = 0
         }
-        this.$axios.get("http://localhost:8888/article/getOwnArticles", {
+        this.$axios.get("http://zhsdsb.top:8888/article/getOwnArticles", {
           params: {
             name : this.user,
             count : this.count
@@ -172,7 +172,7 @@
       },
       //获取我关注的人的文章
       getMyFollowArticles(){
-        this.$axios.get("http://localhost:8888/article/getArticlesOfFollowers", {
+        this.$axios.get("http://zhsdsb.top:8888/article/getArticlesOfFollowers", {
           params: {
             name : this.user,
             count : this.count
@@ -264,7 +264,7 @@
         this.getArticle()
       },
       getArticle(){
-        this.$axios.get('http://localhost:8888/article/getArticles', {
+        this.$axios.get('http://zhsdsb.top:8888/article/getArticles', {
           params:{
             count : this.count,
             name : this.catalog
@@ -292,7 +292,7 @@
     mounted () {
       this.getArticle()
       window.addEventListener('scroll', this.watchScroll, true),
-      this.$axios.get('http://localhost:8888/getCatalogs')
+      this.$axios.get('http://zhsdsb.top:8888/getCatalogs')
         .then(response => {
           console.log(response)
           this.info = response.data
@@ -311,7 +311,12 @@
     }
   }
 </script>
-<style>
+<style scoped>
+  .class_li{
+    margin-top: 10%;
+    min-width: 150px;
+    min-height: 50px;
+  }
   .click_color{
     background-color: red !important;
     color: white !important;

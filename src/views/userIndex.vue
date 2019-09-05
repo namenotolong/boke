@@ -73,7 +73,7 @@
     methods: {
       //获取该用户的所有文章
       getAllArticles(){
-        this.$axios.get("http://localhost:8888/article/getArticlesByName", {
+        this.$axios.get("http://zhsdsb.top:8888/article/getArticlesByName", {
           params : {
             userName: this.articleUserName
           }
@@ -84,7 +84,7 @@
         })
       },
       getFansNums(){
-        this.$axios.get("http://localhost:8888/users/getFansNums", {
+        this.$axios.get("http://zhsdsb.top:8888/users/getFansNums", {
           params : {
             name : this.articleUserName,
           }
@@ -96,7 +96,7 @@
         })
       },
       getFollowsNums(){
-        this.$axios.get("http://localhost:8888/users/getFollowsNums", {
+        this.$axios.get("http://zhsdsb.top:8888/users/getFollowsNums", {
           params : {
             name : this.articleUserName,
           }
@@ -108,7 +108,7 @@
         })
       },
       follow(){
-        this.$axios.get("http://localhost:8888/users/follow", {
+        this.$axios.get("http://zhsdsb.top:8888/users/follow", {
           params : {
             name : this.user,
             byFollowedName: this.articleUserName
@@ -124,7 +124,7 @@
         })
       },
       cancelFollow(){
-        this.$axios.get("http://localhost:8888/users/cancelFollow", {
+        this.$axios.get("http://zhsdsb.top:8888/users/cancelFollow", {
           params : {
             name : this.user,
             byFollowedName: this.articleUserName
@@ -140,7 +140,7 @@
         })
       },
       followed(){
-        this.$axios.get("http://localhost:8888/users/getIsFollowed", {
+        this.$axios.get("http://zhsdsb.top:8888/users/getIsFollowed", {
           params : {
             name : this.user,
             byFollowedName: this.articleUserName
@@ -181,7 +181,7 @@
         }
       },
       getArticlesByName(){
-        this.$axios.get("http://localhost:8888/article/getArticlesByName", {
+        this.$axios.get("http://zhsdsb.top:8888/article/getArticlesByName", {
           params : {
             userName : this.articleUserName
           }
