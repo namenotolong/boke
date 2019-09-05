@@ -4,10 +4,7 @@ import com.hy.boke.config.RabbitMQSender;
 import com.hy.boke.constant.ConstantKey;
 import com.hy.boke.controller.BaseController;
 import com.hy.boke.dao.articleDao.ArticleRepository;
-import com.hy.boke.po.Article;
-import com.hy.boke.po.Catalog;
-import com.hy.boke.po.Common;
-import com.hy.boke.po.User;
+import com.hy.boke.po.*;
 import com.hy.boke.service.ArticleService;
 import com.hy.boke.utils.JwtHelper;
 import io.jsonwebtoken.Jwts;
@@ -62,9 +59,7 @@ public class BokeApplicationTests {
 
     @Test
     public void contextLoads(){
-        Common common = new Common();
-        common.setCount(1L);
-        sender.send(common);
+        dao.create(Event.class, false);
     }
 
 }
