@@ -1,0 +1,9 @@
+一个博客平台，前后段分离，前端代码在html分支
+使用springboot+mysql+nutz.dao作基础架构
+使用springSecurity+jwt作用户身份认证
+使用mongoDB作为文档数据库
+使用redis作缓存，以及实体关系处理
+使用rabbitMQ作消息异步处理
+介入swagger接口文章
+使用vue作前端框架
+使用element-ui作页面美化
