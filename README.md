@@ -4,6 +4,5 @@
 使用mongoDB作为文档数据库
 使用redis作缓存，以及实体关系处理
 使用rabbitMQ作消息异步处理
-介入swagger接口文章
 使用vue作前端框架
 使用element-ui作页面美化
